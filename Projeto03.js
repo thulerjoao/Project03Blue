@@ -5,6 +5,7 @@ let prompt = require("prompt-sync")();
 let nomePersonagem = prompt(`Digite o nome do personagem da história: `);
 let idadePersonagem = prompt(`Digite a idade do seu personagem: `);
 let elementoEscolhido;
+let jovem;
 
 const dadosPersonagem = {
     nome: nomePersonagem,
@@ -104,11 +105,12 @@ poderElemental = () => {
     const elementos = ["fogo", "agua", "terra", "ar"];
     
     do {
+        console.log(`${nomePersonagem}, sou um espirito elementar da natureza, e venho em missão de lhe conceder algum dos seguintes elementos: ${elementos} `)
       elementoEscolhido = prompt(
-        `${nomePersonagem}, sou um espirito elementar da natureza, qual elemento você deseja invocar? ${elementos} `
+        `Qual destes voce escolhe? `
       ).toLowerCase();
     } while (!elementos.includes(elementoEscolhido));
-    
+    console.clear();
     console.log(
       `\nVocê invocou o elemento "${elementoEscolhido}".\n`
     );
@@ -176,7 +178,6 @@ validacao = (x) => {
     while (x != `sim` && x != `s` && x != `nao` && x != `não` && x != `n`) {
         console.log(`!!! ATENÇÃO !!!`)
       x = prompt(`Responda somente com "sim" ou "não": `).toLowerCase();
-      console.clear();
     }
     return x;
   };
@@ -315,12 +316,13 @@ if (
     console.log(`A floresta fica muito distante de sua casa, e você deve decidir entre pegar um atalho ou permanecer no caminho padrão.`)
     let caminho = prompt(`Deseja pegar um atalho? [OBS] O atalho é mais rápido, porém não tão seguro: `).toLowerCase();
     validacao(caminho);
+    console.clear();
 
     if (caminho == `sim` || caminho == `s`){
         dadosPersonagem.energia -= 10
         console.log(`\nMesmo pegando um atalho, o trajeto foi difícil e ${nomePersonagem} perdeu '10' de energia.`);
         console.log(`Seu novo valor de energia é '${dadosPersonagem.energia}'`);  
-        console.log(`Ainda enquanto passava pelo atalho, ${nomePersonagem} avistou de longe um Orc.\n Chegando perto, o montro o cercou. Impedindo ${nomePersonagem} de passar ou recuar.`)
+        console.log(`Enquanto passava pelo atalho, ${nomePersonagem} avistou de longe um Orc.\nChegando perto, o monstro o cercou. Impedindo ${nomePersonagem} de passar adiante ou recuar.`)
         console.log(`Então, ${nomePersonagem} manteve uma distância segura e constatou os dados do Orc: `)
         console.table(orc);
         console.log(`\nComo não havia escapatória, a única opção de ${nomePersonagem} foi enfrentar o monstro. `)
@@ -330,10 +332,10 @@ if (
             dadosPersonagem.energia != 0
         ) {
             console.lo
-            console.log(`O Orc, que é muito superior em todos os atributos e começa a dar uma sequencia de golpes.\n${nomePersonagem} não vai conseguir derrota-lo assim...\n`);
+            console.log(`O Orc, que é muito superior em todos os atributos, começou a dar uma sequencia de golpes.\n${nomePersonagem} não vai conseguir derrota-lo assim...\n`);
             tempo();
-            console.log(`Já quase sem forças ${nomePersonagem} vê um brilho de seu amuleto e uma voz que vinha de dentro do seu peito.\n
-        Aparece um espirito elementar em sua frente e pergunta para ${nomePersonagem}: \n`)
+            console.log(`...até que quase sem forças, ${nomePersonagem} vê um brilho saindo de seu amuleto e uma voz que vinha de dentro do seu peito.\n`)
+            console.log(`De repente, aparece um espirito elementar em sua frente e ele diz as seguintes palavras: \n`)
             tempo();
             tempo();
     
@@ -342,14 +344,14 @@ if (
         tempo();
         
         dadosPersonagem.energia -= 35
-        console.log(`Agora com seu novo poder ${nomePersonagem} precisou de ${Math.ceil(
+        console.log(`\nAgora com seu novo poder ${nomePersonagem} precisou de ${Math.ceil(
             orc.vida / dadosPersonagem.ataque
         )} investidas para eliminar e passar pelo Orc. E sua energia caiu para ${dadosPersonagem.energia}`);
         
         tempo();
     
-        console.log(`Derrotar o Orc levou um bom tempo e o dia estava anoitecendo. Então ${nomePersonagem} resolveu desistir da caçada e voltar para casa.`)
-        console.log(`Agora que conquistou seu novo poder de invocação ${nomePersonagem} terá de treinar ainda mais para aprimorar suas habilidades.\n`);
+        console.log(`\nDerrotar o Orc levou um bom tempo e o dia estava anoitecendo. Então ${nomePersonagem} resolveu desistir da caçada e voltar para casa.`)
+        console.log(`Agora que conquistou seu novo poder de invocação, ${nomePersonagem} terá de treinar ainda mais para aprimorar suas habilidades.\n`);
         
         tempo();
         
@@ -381,7 +383,7 @@ if (
                     Eis que na volta, ${nomePersonagem} ele encontra um jovem pedindo ajuda.`);
         console.log(`O jovem falou que a vila dele havia sido atacada por um dragão assustador, que estava acabando com as casas e também matando as pessoas.`);
     
-        let jovem = prompt(`Deseja ajudar o jovem? `).toLowerCase();
+        jovem = prompt(`Deseja ajudar o jovem? `).toLowerCase();
         validacao(jovem);
     }
     
