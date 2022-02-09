@@ -5,7 +5,6 @@ let prompt = require("prompt-sync")();
 let nomePersonagem = prompt(`Digite o nome do personagem da história: `);
 let idadePersonagem = prompt(`Digite a idade do seu personagem: `);
 let elementoEscolhido;
-let contador = 0;
 
 const dadosPersonagem = {
     nome: nomePersonagem,
@@ -68,14 +67,10 @@ aumentoStatus = (status) => {
         dadosPersonagem.agilidade += 8;
         dadosPersonagem.defesa += 8;
         dadosPersonagem.energia -= 5;
+        console.clear();
         console.log(
-            `\nSeus status aumentaram para:
-            \nVida: ${dadosPersonagem.vida}
-            \nAtaque: ${dadosPersonagem.ataque}
-            \nAgilidade: ${dadosPersonagem.agilidade}
-            \nDefesa: ${dadosPersonagem.defesa}
-            Energia: ${dadosPersonagem.energia}`
-        );
+            `\nCom o treino que acabou de fazer, seus status mudaram.\nConfira:`)
+            console.table(dadosPersonagem);
         return dadosPersonagem.ataque;
         return dadosPersonagem.vida;
         return dadosPersonagem.agilidade;
@@ -94,7 +89,7 @@ diminuirStatus = (status) => {
         dadosPersonagem.agilidade -= 8;
         dadosPersonagem.defesa -= 8;
         console.log(
-            `\nSua vida diminiu para ${dadosPersonagem.vida}, ataque diminiu para ${dadosPersonagem.ataque}.\n`
+            `\nSua vida diminiu para ${dadosPersonagem.vida} e o ataque para ${dadosPersonagem.ataque}.\n`
         );
         return dadosPersonagem.vida;
         return dadosPersonagem.ataque;
@@ -172,29 +167,40 @@ recuperarEnergia = () =>{
           dadosPersonagem.energia += comida[1];
         }
       }
+      console.clear();
 }
 
 //ARROW FUNCTION PARA VALIDAÇÃO DA RESPOSTA DO USUARIO
 
-validacao = (x) => {
+validacao = (x) => {    
     while (x != `sim` && x != `s` && x != `nao` && x != `não` && x != `n`) {
-      x = prompt(`Responda somente com "sim" ou "não": `);
+        console.log(`!!! ATENÇÃO !!!`)
+      x = prompt(`Responda somente com "sim" ou "não": `).toLowerCase();
+      console.clear();
     }
+    return x;
   };
   
 
 ///////////////// **************************************************** ///////////////////////
-
+//EFEITO DE CARREGANDO PERSONAGEM
+console.clear();
 console.log(`Criando seu personagem: `);
 tempo();
 console.log(`.`);
 tempo();
-console.log(`.`);
+console.clear();
+console.log(`Criando seu personagem: `);
+console.log(`. .`);
 tempo();
-console.log(`.`);
+console.clear();
+console.log(`Criando seu personagem: `);
+console.log(`. . .`);
+tempo();
+console.clear();
 
 console.log(
-    `Seu personagem foi criado:
+    `Seu personagem foi criado. Confira:
     `);
 console.table(dadosPersonagem);
 tempo();
@@ -214,12 +220,14 @@ console.log(
 );
 
 // ONDE O PERSONAGEM VAI TOMAR O PRIMEIRO RUMO DA HISTORIA
-console.log(`O sol raiou e está na hora de ir para o treino.`)
+console.log(`O sol raiou e está na hora de ir para o treino.\n`)
 let irTreinar = prompt(`${nomePersonagem}, deseja ir treinar hoje? `).toLowerCase();
+console.clear();
+irTreinar = validacao(irTreinar);
 tempo();
 aumentoStatus(irTreinar);
 diminuirStatus(irTreinar);
-validacao(irTreinar);
+
 tempo();
 
 
@@ -230,36 +238,37 @@ if (
     ) { 
         while (
             irTreinar == `sim` ||
-            irTreinar == `s` &&
-            contador == 4
+            irTreinar == `s` ||
+            dadosPersonagem.energia<=70
             ){
     irTreinar = prompt(
-        `Você pode continuar treinando se quiser, deseja continuar? `
+        `Você pode continuar treinando se quiser, no entanto sua energia irá diminuir cada vez mais. Deseja continuar? `
     ).toLowerCase();
+    validacao(irTreinar);
     tempo();
     aumentoStatus(irTreinar);
-    contador++
             }
+    console.clear();
     console.log(
-        `Após o treino, ${nomePersonagem} volou para casa pois precisava ajudar sua família no pasto.\n`
+        `Após o treino, ${nomePersonagem} volou para casa pois precisava ajudar sua família.\n`
     );
-    console.log(`Seu pai Thors já está com idade avançada e tem dificuldade em realizar as tarefas no pasto.`);
+    console.log(`Seu pai Thors já está com idade avançada e tem dificuldades em realizar as tarefas no pasto.`);
     let ajudarPasto = prompt(
         `Deseja ajudar seu pai? `
     ).toLowerCase();
+    ajudarPasto = validacao(ajudarPasto)
     
     if (ajudarPasto == `s` || ajudarPasto == `sim`) {
         dadosPersonagem.energia -= 5
         console.log(
-            `\nAjudar seu pai não foi uma tarefa muito fácil e lhe deixou um pouco cansado.\nIstou diminuiu sua energia para ${dadosPersonagem.energia
+            `\nSua família tem muitos animais e ajudar seu pai não foi uma tarefa muito fácil. Você acabou ficando um pouco cansado.\nIstou diminuiu sua energia para ${dadosPersonagem.energia
             }`
         );
         tempo();
     
         // CONDIÇÃO PARA LUTA DO PERSONAGEM
-        console.log(`Trabalho concluído... é hora de voltar para casa.`);
-        console.log(`\nEnquanto se arrumava suas coisas, ${nomePersonagem} avistou umas de suas ovelhas do rebanho sendo atacada por um lobo.
-        ${nomePersonagem} pegou sua espada e correu para ajuda-lá.`);
+        console.log(`\nTrabalho concluído... é hora de voltar para casa.`);
+        console.log(`\nEnquanto se arrumava suas coisas, ${nomePersonagem} avistou umas de suas ovelhas do rebanho sendo atacada por um lobo.\n${nomePersonagem} pegou sua espada e correu para ajuda-lá.`);
         tempo();
         console.log(
             `\nChegando mais perto, ${nomePersonagem} conseguiu verificar os status do lobo e decidiu enfrenta-lo: \n`
@@ -275,12 +284,12 @@ if (
             console.log(
                 `Foram necessárias ${Math.ceil(
                     lobo.vida / dadosPersonagem.ataque
-                )} investidas para conseguir matar o lobo. `//INVESTIDAS???????
+                )} investidas para conseguir matar o lobo. A ovelha foi salva!`//INVESTIDAS???????
             );
             aumentoStatus (matarLobo);
         } else {
             console.log(
-                `Você não conseguiu ajudar a ovelha, e o lobo acabou matando ela.`
+                `\nVocê não estava forte o suficiente para enfrentar ovelha, e o lobo acabou a matando.`
             );
         }
     } else if (ajudarPasto == `n` || ajudarPasto == `nao` || ajudarPasto == `não`){
@@ -293,12 +302,11 @@ if (
     
     
     recuperarEnergia ();
-    
     console.log(`\nApós a refeição, a energia de ${dadosPersonagem.nome} aumentou para: ${dadosPersonagem.energia}.\n`);
     tempo();
     console.log(`Como era de costume, toda tarde ${nomePersonagem} saia para caçar em uma floresta ao sul de Lorência. 
     Porém, naquela tarde em especial ele sentiu algo diferente, semelhante de quando acordou. Se sentia um pouco mais forte e rápido. Então se despediu 
-    de seu pai e ao se despedir de sua mãe, ela entregou a ele um amuleto para protegelo durante a caçada. \n`);
+    de seu pai e ao se despedir de sua mãe, ela entregou a ele um amuleto para protege-lo durante a caçada. \n`);
     
     tempo();
     
@@ -311,13 +319,11 @@ if (
     if (caminho == `sim` || caminho == `s`){
         dadosPersonagem.energia -= 10
         console.log(`\nMesmo pegando um atalho, o trajeto foi difícil e ${nomePersonagem} perdeu '10' de energia.`);
-        console.log(`Seu novo valor de energia é '${dadosPersonagem.energia}'`);
-        
-        (`Ainda enquanto passava pelo atalho, ${nomePersonagem} avista de longe um Orc.\n Chegando perto, o montro cerca ${nomePersonagem}, impedindo-o de passar ou recuar.`)
+        console.log(`Seu novo valor de energia é '${dadosPersonagem.energia}'`);  
+        console.log(`Ainda enquanto passava pelo atalho, ${nomePersonagem} avistou de longe um Orc.\n Chegando perto, o montro o cercou. Impedindo ${nomePersonagem} de passar ou recuar.`)
         console.log(`Então, ${nomePersonagem} manteve uma distância segura e constatou os dados do Orc: `)
-    console.table (orc)
         console.table(orc);
-        console.log(`\nComo não havia escapatória, a única opção de ${nomePersonagem} era enfrentar o monstro. `)
+        console.log(`\nComo não havia escapatória, a única opção de ${nomePersonagem} foi enfrentar o monstro. `)
     
         if( 
             dadosPersonagem.ataque < orc.vida &&
@@ -393,11 +399,8 @@ if (
         } else if(jovem == `nao` || jovem == `não` || jovem == `n`){
             
         }
-    
-    }
-    
     tempo();
-} else if (
+}else if (
     irTreinar == `não` ||
     irTreinar == `nao` ||
     irTreinar == `n`
