@@ -377,9 +377,9 @@ for (i = 0; i < numeroDias; i++) {
     console.log(`\nApós a refeição, a energia de ${dadosPersonagem.nome} aumentou para: ${dadosPersonagem.energia}.\n`);
     tempo();
 
-    console.log(`Como era de costume, toda tarde ${nomePersonagem} saia para caçar em uma floresta ao sul de Lorência. 
-    Porém, naquela tarde em especial ele sentiu algo diferente, semelhante de quando acordou. Se sentia um pouco mais forte e rápido. Então se despediu 
-    de seu pai e ao se despedir de sua mãe, ela entregou a ele um amuleto para protege-lo durante a caçada. \n`);
+    console.log(`Como era de costume, toda tarde ${nomePersonagem} saia para caçar em uma floresta ao sul de Lorência.`); 
+    console.log(`Porém, naquela tarde em especial ele sentiu algo diferente, semelhante de quando acordou. Se sentia um pouco mais forte e rápido.`)
+    console.log(`Então se despediu de seu pai e ao se despedir de sua mãe, ela entregou a ele um amuleto para protege-lo durante a caçada. \n`);
 
     tempo();
 
@@ -404,7 +404,7 @@ for (i = 0; i < numeroDias; i++) {
         console.log(`O Orc, que é muito superior em todos os atributos, começou a dar uma sequencia de golpes.\n${nomePersonagem} não vai conseguir derrota-lo assim...\n`);
         tempo();
         console.log(`...até que quase sem forças, ${nomePersonagem} vê um brilho saindo de seu amuleto e uma voz que vinha de dentro do seu peito.\n`)
-        console.log(`De repente, aparece um espirito elementar em sua frente e ele diz as seguintes palavras: \n`)
+        console.log(`De repente, aparece um espirito elementar em sua frente dizendo as seguintes palavras: \n`)
 
         tempo();
 
@@ -414,17 +414,17 @@ for (i = 0; i < numeroDias; i++) {
 
         dadosPersonagem.energia -= 35;
         console.log(
-          `\nAgora com seu novo poder ${nomePersonagem} precisou de ${Math.ceil(
+          `\nAgora com seu novo poder, ${nomePersonagem} precisou de ${Math.ceil(
             (orc.vida + orc.defesa) /
               (dadosPersonagem.ataque + dadosPersonagem.agilidade)
           )} investidas para eliminar e passar pelo Orc. Sua energia caiu para ${
-            dadosPersonagem.energia
+            dadosPersonagem.energia.
           }`
         );
 
         tempo();
 
-        console.log(`\nDerrotar o Orc levou um bom tempo e o dia estava anoitecendo. Então ${nomePersonagem} resolveu desistir da caçada e voltar para casa.`)
+        console.log(`\nDerrotar o Orc levou um bom tempo e o dia estava anoitecendo. Então, ${nomePersonagem} resolveu desistir da caçada e voltar para casa.`)
         console.log(`Agora que conquistou seu novo poder de invocação, ${nomePersonagem} terá de treinar ainda mais para aprimorar suas habilidades.\n`);
         
         tempo();
@@ -707,7 +707,7 @@ enfrentar o dragão. No entanto, os atributos do dragão eram muito maiores.\n`)
         console.log(`Ao final, ${nomePersonagem} acaba desmaiando de tanto esforço... no entanto ficou feliz por salvar sua mãe e a vila.\n`);
       } else {
         console.log(
-          `${nomePersonagem} não quis enfrentar o Necromante e fuigiu. Infelizmente sua vila foi compeltamente destruida.\nAmanhã talvez o dia seja melhor...`
+          `${nomePersonagem} não quis enfrentar o Necromante e fuigiu. Infelizmente sua vila foi compeltamente destruida.\nAmanhã talvez seja um dia melhor...`
         );
       }
     }
