@@ -417,10 +417,7 @@ for (i = 0; i < numeroDias; i++) {
           `\nAgora com seu novo poder, ${nomePersonagem} precisou de ${Math.ceil(
             (orc.vida + orc.defesa) /
               (dadosPersonagem.ataque + dadosPersonagem.agilidade)
-          )} investidas para eliminar e passar pelo Orc. Sua energia caiu para ${
-            dadosPersonagem.energia.
-          }`
-        );
+          )} investidas para eliminar e passar pelo Orc. Sua energia caiu para ${dadosPersonagem.energia}`);
 
         tempo();
 
