@@ -2,10 +2,25 @@ let prompt = require("prompt-sync")();
 
 // PRINCIPAIS VARIAVEIS E OBJETOs DOs STATUS DOS PERSONAGENS DA HISTORIA
 
-let nomePersonagem = prompt(`Digite o nome do personagem da história: `);
-let idadePersonagem = prompt(`Digite a idade do seu personagem: `);
+let nomePersonagem;
+let idadePersonagem;
 let elementoEscolhido;
 let jovem;
+let irTreinar;
+
+nomePersonagem = prompt(`Digite o nome do personagem da história: `);
+    while(!isNaN(nomePersonagem)) {
+        console.log(`!!!ATENÇÃO!!!`);
+        nomePersonagem=prompt(`Digite um nome válido para seu personagem: `);
+        console.clear();
+    }
+
+idadePersonagem = prompt(`Digite a idade do seu personagem: `);
+    while(isNaN(idadePersonagem)) {
+        console.log(`!!!ATENÇÃO!!!`);
+        idadePersonagem=prompt(`Digite valor correto para idade: `);
+        console.clear();
+}
 
 const dadosPersonagem = {
     nome: nomePersonagem,
@@ -70,7 +85,7 @@ aumentoStatus = (status) => {
         dadosPersonagem.energia -= 5;
         console.clear();
         console.log(
-            `\nCom o treino que acabou de fazer, seus status mudaram.\nConfira:`)
+            `\nCom a ação que acabou de tomar, seus status mudaram.\nConfira:`)
             console.table(dadosPersonagem);
         return dadosPersonagem.ataque;
         return dadosPersonagem.vida;
@@ -90,7 +105,7 @@ diminuirStatus = (status) => {
         dadosPersonagem.agilidade -= 8;
         dadosPersonagem.defesa -= 8;
         console.log(
-            `\nSua vida diminiu para ${dadosPersonagem.vida} e o ataque para ${dadosPersonagem.ataque}.\n`
+            `\nDeixando de treinar, sua vida diminiu para ${dadosPersonagem.vida} e o ataque para ${dadosPersonagem.ataque}.\n`
         );
         return dadosPersonagem.vida;
         return dadosPersonagem.ataque;
@@ -175,11 +190,13 @@ recuperarEnergia = () =>{
 //ARROW FUNCTION PARA VALIDAÇÃO DA RESPOSTA DO USUARIO
 
 validacao = (x) => {    
+    let y = '';
     while (x != `sim` && x != `s` && x != `nao` && x != `não` && x != `n`) {
         console.log(`!!! ATENÇÃO !!!`)
       x = prompt(`Responda somente com "sim" ou "não": `).toLowerCase();
+      y = x;
     }
-    return x;
+    return y;
   };
   
 
@@ -212,45 +229,52 @@ tempo();
 //INICIO DA HISTORIA, JOGO E AS INTERAÇÕES COM O USUARIO.
 
 console.log(
-    `\nEm um reino distante, chamado Albion Flame, havia uma cidade que era muito abençoada, com terra fértil, água fresca, e muita mata.
+    `\nEm um reino distante chamado Albion Flame, havia uma cidade que era muito abençoada, com terra fértil, água fresca, e muita mata.
 Esta cidade era Lorência, e nela vivia ${nomePersonagem}, um jovem aspirante a cavaleiro que era muito orgulhoso e talentoso por sinal.`
 );
 
 console.log(
-    `\nTodo dia pela manhã, ${nomePersonagem} acorda para treinar esgrima com seu professor.\nNo entato, andava um pouco desmotivado por algum motivo.\n`
+    `\nTodo dia pela manhã, ${nomePersonagem} acorda para treinar esgrima com seu professor.\nNo entato, por algum motivo andava um pouco desmotivado .\n`
 );
 
 // ONDE O PERSONAGEM VAI TOMAR O PRIMEIRO RUMO DA HISTORIA
-console.log(`O sol raiou e está na hora de ir para o treino.\n`)
-let irTreinar = prompt(`${nomePersonagem}, deseja ir treinar hoje? `).toLowerCase();
-console.clear();
-irTreinar = validacao(irTreinar);
-tempo();
-aumentoStatus(irTreinar);
-diminuirStatus(irTreinar);
+// console.log(`O sol raiou e está na hora de ir para o treino.\n`)
+// irTreinar = prompt(`${nomePersonagem}, deseja ir treinar hoje? `).toLowerCase();
+// console.log(irTreinar);
+// irTreinar = validacao(irTreinar);
+// console.clear();
+// console.log(irTreinar);
+// aumentoStatus(irTreinar);
+// tempo();
+// diminuirStatus(irTreinar);
+// tempo();
 
-tempo();
+irTreinar = prompt(`Será que vou treinar hoje? `).toLowerCase();
+  tempo();
+  dadosPersonagem.aumentoStatus(irTreinar);
+  dadosPersonagem.diminuirStatus(irTreinar);
+  validacao(irTreinar);
+  tempo();
 
 
 if (
     irTreinar == `sim` ||
     irTreinar == `s`
 
-    ) { 
+    ) { console.log(`Entrou aqui`);
         while (
             irTreinar == `sim` ||
-            irTreinar == `s` ||
-            dadosPersonagem.energia<=70
+            irTreinar == `s`
             ){
     irTreinar = prompt(
         `Você pode continuar treinando se quiser, no entanto sua energia irá diminuir cada vez mais. Deseja continuar? `
     ).toLowerCase();
-    validacao(irTreinar);
-    tempo();
+    irTreinar = validacao(irTreinar);
     aumentoStatus(irTreinar);
+    tempo();
+    
             }
-    console.clear();
-    console.log(
+        console.log(
         `Após o treino, ${nomePersonagem} volou para casa pois precisava ajudar sua família.\n`
     );
     console.log(`Seu pai Thors já está com idade avançada e tem dificuldades em realizar as tarefas no pasto.`);
@@ -269,7 +293,7 @@ if (
     
         // CONDIÇÃO PARA LUTA DO PERSONAGEM
         console.log(`\nTrabalho concluído... é hora de voltar para casa.`);
-        console.log(`\nEnquanto se arrumava suas coisas, ${nomePersonagem} avistou umas de suas ovelhas do rebanho sendo atacada por um lobo.\n${nomePersonagem} pegou sua espada e correu para ajuda-lá.`);
+        console.log(`\nEnquanto arrumava suas coisas, ${nomePersonagem} avistou umas de suas ovelhas do rebanho sendo atacada por um lobo.\n${nomePersonagem} pegou sua espada e correu para ajuda-lá.`);
         tempo();
         console.log(
             `\nChegando mais perto, ${nomePersonagem} conseguiu verificar os status do lobo e decidiu enfrenta-lo: \n`
@@ -293,16 +317,17 @@ if (
                 `\nVocê não estava forte o suficiente para enfrentar ovelha, e o lobo acabou a matando.`
             );
         }
-    } else if (ajudarPasto == `n` || ajudarPasto == `nao` || ajudarPasto == `não`){
+    } else {
+        console.clear();
         console.log(`Realmente ${nomePersonagem} não estava em um bom dia...\nNão ajudar no pasto pode poupar energias para uma futura ocasião.`);
     }
     
     //CONDIÇÃO PARA AUMENTO DA ENERGIA DO PERSONAGEM.
-    console.log(`\nA manhã se foi e é hora de almoçar para repor suas energias que estão em '${dadosPersonagem.energia}'.
-                \n${nomePersonagem} precisa escolher o cardápio.\n`);
-    
-    
+    console.log(`\nA manhã se foi e é hora de almoçar para repor suas energias que estão em '${dadosPersonagem.energia}'.\n${nomePersonagem} precisa escolher o cardápio.\n`);
+        
     recuperarEnergia ();
+    console.clear();
+
     console.log(`\nApós a refeição, a energia de ${dadosPersonagem.nome} aumentou para: ${dadosPersonagem.energia}.\n`);
     tempo();
     console.log(`Como era de costume, toda tarde ${nomePersonagem} saia para caçar em uma floresta ao sul de Lorência. 
@@ -315,7 +340,7 @@ if (
 
     console.log(`A floresta fica muito distante de sua casa, e você deve decidir entre pegar um atalho ou permanecer no caminho padrão.`)
     let caminho = prompt(`Deseja pegar um atalho? [OBS] O atalho é mais rápido, porém não tão seguro: `).toLowerCase();
-    validacao(caminho);
+    caminho = validacao(caminho);
     console.clear();
 
     if (caminho == `sim` || caminho == `s`){
@@ -325,7 +350,7 @@ if (
         console.log(`Enquanto passava pelo atalho, ${nomePersonagem} avistou de longe um Orc.\nChegando perto, o monstro o cercou. Impedindo ${nomePersonagem} de passar adiante ou recuar.`)
         console.log(`Então, ${nomePersonagem} manteve uma distância segura e constatou os dados do Orc: `)
         console.table(orc);
-        console.log(`\nComo não havia escapatória, a única opção de ${nomePersonagem} foi enfrentar o monstro. `)
+        console.log(`\nComo não havia escapatória, a única opção de ${nomePersonagem} foi enfrentar o monstro. `);
     
         if( 
             dadosPersonagem.ataque < orc.vida &&
@@ -379,8 +404,7 @@ if (
     } else if(caminho == `nao` || caminho == `não` || caminho == `n`){
         dadosPersonagem.energia -= 25
         console.log(`Como pegou o caminho mais longo ${nomePersonagem} acabou perdendo energia.\nEnergia atual: ${dadosPersonagem.energia}.\n`);
-        console.log(`Chegando na floresta, ${nomePersonagem} realizou sua caçada sem nenhum problema e acumulou suprimentos para levar para casa.\n
-                    Eis que na volta, ${nomePersonagem} ele encontra um jovem pedindo ajuda.`);
+        console.log(`Chegando na floresta, ${nomePersonagem} realizou sua caçada sem nenhum problema e acumulou suprimentos para levar para casa.\nEis que na volta, ${nomePersonagem} encontra um jovem pedindo ajuda.`);
         console.log(`O jovem falou que a vila dele havia sido atacada por um dragão assustador, que estava acabando com as casas e também matando as pessoas.`);
     
         jovem = prompt(`Deseja ajudar o jovem? `).toLowerCase();
@@ -388,6 +412,7 @@ if (
     }
     
         if (jovem == `sim` || jovem == `s`){
+            
             console.log();
             dadosPersonagem.energia -= 20
             console.log(`A vila do jovem ficava próxima a Lorência.\nChegando lá, ${nomePersonagem} avistou o dragão e de longe conseguiu constatar seus atributos:`);
@@ -402,59 +427,57 @@ if (
             
         }
     tempo();
-}else if (
-    irTreinar == `não` ||
-    irTreinar == `nao` ||
-    irTreinar == `n`
-) {
-    console.log(`Como ${nomePersonagem} não quis treinar, decidiu sair para explorar uma caverna ao sul da vila que por más linguas vivia um golem
-porém, ninguem nunca tinha visto. Como não tinha treinado, sua mãe lhe abençoou com uma proteção e lhe deu um amuleto.\n`);
+}else{ //ELSE REFERENTE A RESOLVER NÃO IR TREINAR
+    console.log(`Como ${nomePersonagem} não quis treinar, ele decidiu sair para explorar uma caverna ao sul da vila.`);
+    console.log(`Por más línguas, lá vivia um Golem. Porém ninguém nunca havia o visto.`)
+    console.log(`Por não ter treinado, antes que saísse de casa sua mãe lhe abençoou com uma proteção e lhe deu um amuleto.\n`);
   console.log(
-    `No caminho do caminho ${nomePersonagem} passou pelo mar, e ficou pensando em levar suprimentos para casa.`
+    `Durante o caminho, ${nomePersonagem} passou pelo mar e ficou pensando em levar alguns suprimentos para casa.`
   );
 
   let suprimentos = prompt(
     `Deseja pescar algo para levar pra casa? `
   ).toLowerCase();
-  validacao(suprimentos);
+    suprimentos = validacao(suprimentos);
+    console.clear();
+
   if (suprimentos == `sim` || suprimentos == `s`) {
     dadosPersonagem.energia -= 15;
     console.log(
-      `${nomePersonagem} conseguiu pegar alguns peixes, porém levou a tarde toda e gastou um pouco da sua energia ficando com: ${dadosPersonagem.energia}`
+      `\n${nomePersonagem} é um ótimo pescador e conseguiu pegar alguns peixes.\nPorém isso levou a tarde toda e consumiu um pouco da sua energia, ficando com: ${dadosPersonagem.energia}`
     );
-  } else if (
-    suprimentos == `nao` ||
-    suprimentos == `não` ||
-    suprimentos == `n`
-  ) {
-    console.log(`${nomePersonagem} Foi direto em direção a caverna.`);
+    console.log(`\nEntão, ${nomePersonagem} guarda os suprimentos e segue seu caminho.\n`)
+  } else {
+    console.log(`\n${nomePersonagem} decidiu seguir seu caminho e não se preocupar com suprimentos no momento.\n`); 
   }
   console.log(
-    `Chegando a caverna ${nomePersonagem} começa a ficar apreensivo pois não sabia o que tinha dentro e mesmo assim decidiu entrar.`
+    `Chegando a caverna ${nomePersonagem} ficou apreensivo, pois não sabia o que havia dentro. Mesmo assim, ele decidiu entrar.`
   );
   console.log(
-    `Ao entrar na caverna ${nomePersonagem} percebeu um barulho e foi caminhando em direção a ele, até que conseguiu avistar o tal Golem.
-Com os atributos: `
+    `Assim que entrou, ${nomePersonagem} percebeu um barulho enstranho e foi caminhando devagar em direção a ele.\nEis que avistou o tal Golem, que possuia os seguintes atributos: `
   );
   console.table(golem);
+  console.log(`\nComo o Golem era muito forte, ${nomePersonagem} prefiriu não enfrenta-lo no momento e ir para casa.`)
   console.log(
-    `No caminho de volta pra casa ${nomePersonagem} encontra um Elfo que ficou muito elforico ao ver o amuleto que ${nomePersonagem} carregava.`
+    `\nNo caminho de volta, ${nomePersonagem} encontrou um Elfo que ficou muito eufórico ao ver o amuleto que ele carregava.`
   );
 
   let amuleto = prompt(
-    `Deseja saber mais sobre esse amuleto que você carrega? Perguntou o Elfo `
-  );
-  validacao(amuleto);
+    `Deseja saber mais sobre esse amuleto que carrega? Perguntou o Elfo. `
+  ).toLowerCase();
+  amuleto = validacao(amuleto);
+  console.clear();
+
   if (amuleto == `sim` || amuleto == `s`) {
     console.log(
-      `Esse amuleto foi forjado pelos elfos ancestrais, e colocaram nele os espiritos elementais da floresta.
+      `\nEntão o Elfo disse:\n\nEsse amuleto foi forjado pelos elfos ancestrais, que colocaram nele os espiritos elementais da floresta.
 Sendo eles: Fogo, Agua, Terra e Ar.`
     );
     console.log(
-      `O elfo falou sobre um velho amigo que morava no pé da montanha que poderia treinar e ensinar ele mais sobre os elementos`
+      `O elfo contou também, a respeito de um velho amigo que morava no pé da montanha, que poderia treinar e ensinar ${nomePersonagem} mais sobre os elementos`
     );
 
-  } else if (amuleto == `nao` || amuleto == `não` || amuleto == `n`) {
+  } else {
     console.log(
       `${nomePersonagem} seguiu em frente sem dar bola pro Elfo, chegando em casa para a janta.`
     );
